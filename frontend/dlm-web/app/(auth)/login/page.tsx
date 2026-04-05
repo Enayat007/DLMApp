@@ -74,10 +74,12 @@ function LoginForm() {
       } else {
         // On the root domain — use auth-handoff so the cookie is set on the subdomain.
         const handoff = btoa(JSON.stringify(response));
-        const { protocol, hostname, port } = window.location;
+        const { protocol, port } = window.location;
+        // Strip any leading "www." so we don't produce app1.www.nibrasgroups.com
+        const baseDomain = window.location.hostname.replace(/^www\./i, '');
         const portSuffix = port ? `:${port}` : '';
         window.location.href =
-          `${protocol}//${subdomain}.${hostname}${portSuffix}/auth-handoff#${handoff}`;
+          `${protocol}//${subdomain}.${baseDomain}${portSuffix}/auth-handoff#${handoff}`;
       }
     } catch (err: unknown) {
       const e = err as ApiError;

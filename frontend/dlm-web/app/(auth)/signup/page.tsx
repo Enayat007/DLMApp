@@ -110,9 +110,11 @@ function SignupForm() {
       // The /auth-handoff page on the subdomain decodes it, sets the cookie there,
       // and redirects to /dashboard — fixing the cross-subdomain cookie restriction.
       const handoff = btoa(JSON.stringify(response));
-      const { hostname, protocol, port } = window.location;
+      const { protocol, port } = window.location;
+      // Strip any leading "www." so we don't produce app1.www.nibrasgroups.com
+      const baseDomain = window.location.hostname.replace(/^www\./i, '');
       const portSuffix = port ? `:${port}` : '';
-      const subdomainHost = `${form.subdomain}.${hostname}${portSuffix}`;
+      const subdomainHost = `${form.subdomain}.${baseDomain}${portSuffix}`;
       window.location.href = `${protocol}//${subdomainHost}/auth-handoff#${handoff}`;
     } catch (err: unknown) {
       const e = err as ApiError;
