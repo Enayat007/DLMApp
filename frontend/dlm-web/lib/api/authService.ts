@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { LoginRequest, RegisterRequest, TokenResponse } from '@/lib/types/auth';
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL ?? 'http://api.nibrasgroups.com',
+  baseURL: process.env.NEXT_PUBLIC_API_URL ?? 'https://api.nibrasgroups.com',
   headers: { 'Content-Type': 'application/json' },
   timeout: 15_000,
 });

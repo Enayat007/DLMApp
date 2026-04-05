@@ -11,7 +11,7 @@ import type {
 // ── Axios instance ─────────────────────────────────────────────────────────────
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL ?? 'http://api.nibrasgroups.com',
+  baseURL: process.env.NEXT_PUBLIC_API_URL ?? 'https://api.nibrasgroups.com',
   headers: { 'Content-Type': 'application/json' },
   timeout: 15_000,
 });
