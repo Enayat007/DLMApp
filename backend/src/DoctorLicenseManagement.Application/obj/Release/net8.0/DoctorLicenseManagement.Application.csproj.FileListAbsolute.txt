@@ -1,0 +1,15 @@
+D:\Proj\DLM\backend\src\DoctorLicenseManagement.Application\bin\Release\net8.0\DoctorLicenseManagement.Application.deps.json
+D:\Proj\DLM\backend\src\DoctorLicenseManagement.Application\bin\Release\net8.0\DoctorLicenseManagement.Application.dll
+D:\Proj\DLM\backend\src\DoctorLicenseManagement.Application\bin\Release\net8.0\DoctorLicenseManagement.Application.pdb
+D:\Proj\DLM\backend\src\DoctorLicenseManagement.Application\bin\Release\net8.0\DoctorLicenseManagement.Domain.dll
+D:\Proj\DLM\backend\src\DoctorLicenseManagement.Application\bin\Release\net8.0\DoctorLicenseManagement.Domain.pdb
+D:\Proj\DLM\backend\src\DoctorLicenseManagement.Application\obj\Release\net8.0\DoctorLicenseManagement.Application.csproj.AssemblyReference.cache
+D:\Proj\DLM\backend\src\DoctorLicenseManagement.Application\obj\Release\net8.0\DoctorLicenseManagement.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\Proj\DLM\backend\src\DoctorLicenseManagement.Application\obj\Release\net8.0\DoctorLicenseManagement.Application.AssemblyInfoInputs.cache
+D:\Proj\DLM\backend\src\DoctorLicenseManagement.Application\obj\Release\net8.0\DoctorLicenseManagement.Application.AssemblyInfo.cs
+D:\Proj\DLM\backend\src\DoctorLicenseManagement.Application\obj\Release\net8.0\DoctorLicenseManagement.Application.csproj.CoreCompileInputs.cache
+D:\Proj\DLM\backend\src\DoctorLicenseManagement.Application\obj\Release\net8.0\DoctorLi.57CDFB30.Up2Date
+D:\Proj\DLM\backend\src\DoctorLicenseManagement.Application\obj\Release\net8.0\DoctorLicenseManagement.Application.dll
+D:\Proj\DLM\backend\src\DoctorLicenseManagement.Application\obj\Release\net8.0\refint\DoctorLicenseManagement.Application.dll
+D:\Proj\DLM\backend\src\DoctorLicenseManagement.Application\obj\Release\net8.0\DoctorLicenseManagement.Application.pdb
+D:\Proj\DLM\backend\src\DoctorLicenseManagement.Application\obj\Release\net8.0\ref\DoctorLicenseManagement.Application.dll

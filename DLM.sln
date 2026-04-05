@@ -1,0 +1,39 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0F9113EE-888A-26D2-68B0-4A7D0A2A8745}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoctorLicenseManagement.Application", "backend\src\DoctorLicenseManagement.Application\DoctorLicenseManagement.Application.csproj", "{639DE542-5124-3FE2-C298-ECF175DE77C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoctorLicenseManagement.Domain", "backend\src\DoctorLicenseManagement.Domain\DoctorLicenseManagement.Domain.csproj", "{CC9C5D87-830E-19DF-281F-248084D14E67}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{639DE542-5124-3FE2-C298-ECF175DE77C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{639DE542-5124-3FE2-C298-ECF175DE77C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{639DE542-5124-3FE2-C298-ECF175DE77C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{639DE542-5124-3FE2-C298-ECF175DE77C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC9C5D87-830E-19DF-281F-248084D14E67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC9C5D87-830E-19DF-281F-248084D14E67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC9C5D87-830E-19DF-281F-248084D14E67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC9C5D87-830E-19DF-281F-248084D14E67}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0F9113EE-888A-26D2-68B0-4A7D0A2A8745} = {1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}
+		{639DE542-5124-3FE2-C298-ECF175DE77C1} = {0F9113EE-888A-26D2-68B0-4A7D0A2A8745}
+		{CC9C5D87-830E-19DF-281F-248084D14E67} = {0F9113EE-888A-26D2-68B0-4A7D0A2A8745}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9C33E065-9297-411F-B6DD-4165C3E602AF}
+	EndGlobalSection
+EndGlobal

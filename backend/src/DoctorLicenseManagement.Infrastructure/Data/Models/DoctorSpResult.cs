@@ -1,0 +1,34 @@
+using DoctorLicenseManagement.Domain.Enums;
+
+namespace DoctorLicenseManagement.Infrastructure.Data.Models;
+
+/// <summary>
+/// Flat result model mapped from sp_GetDoctors output.
+/// EF Core uses this as a keyless entity to materialise SP result sets.
+/// </summary>
+public class DoctorSpResult
+{
+    public Guid          Id                { get; set; }
+    public string        FullName          { get; set; } = string.Empty;
+    public string        Email             { get; set; } = string.Empty;
+    public string        Specialization    { get; set; } = string.Empty;
+    public string        LicenseNumber     { get; set; } = string.Empty;
+    public DateTime      LicenseExpiryDate { get; set; }
+    public DateTime      CreatedDate       { get; set; }
+    public DateTime?     UpdatedDate       { get; set; }
+
+    /// <summary>
+    /// Effective status returned by the SP (expiry logic already applied).
+    /// Use int here because some SQL results may be returned as INT; mapping
+    /// to a byte caused an InvalidCastException when the provider returned
+    /// an Int32. We'll cast to the enum via EffectiveStatus.
+    /// </summary>
+    public int           Status            { get; set; }
+
+    /// <summary>
+    /// Total count from COUNT(*) OVER() window function — used for pagination metadata.
+    /// </summary>
+    public int           TotalCount        { get; set; }
+
+    public DoctorStatus  EffectiveStatus => (DoctorStatus)Status;
+}

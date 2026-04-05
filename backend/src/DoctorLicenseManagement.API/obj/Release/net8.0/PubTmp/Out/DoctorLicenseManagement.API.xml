@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DoctorLicenseManagement.API</name>
+    </assembly>
+    <members>
+        <member name="T:DoctorLicenseManagement.API.Controllers.AuthController">
+            <summary>
+            Public authentication endpoints — no tenant context required.
+            </summary>
+        </member>
+        <member name="M:DoctorLicenseManagement.API.Controllers.AuthController.Register(DoctorLicenseManagement.Application.DTOs.Auth.RegisterDto,System.Threading.CancellationToken)">
+            <summary>
+            Registers a new tenant (workspace) with an initial admin user and subscription.
+            This is the full SaaS onboarding in one request:
+            User info + workspace name + subdomain + plan selection.
+            </summary>
+        </member>
+        <member name="M:DoctorLicenseManagement.API.Controllers.AuthController.Login(DoctorLicenseManagement.Application.DTOs.Auth.LoginDto,System.Threading.CancellationToken)">
+            <summary>
+            Authenticates a user within a specific tenant workspace.
+            Returns a JWT access token with tenant and role claims.
+            </summary>
+        </member>
+        <member name="T:DoctorLicenseManagement.API.Controllers.DoctorsController">
+            <summary>
+            Doctor License Management — CRUD endpoints.
+            All endpoints require a valid JWT and resolved tenant context.
+            Write operations (POST/PUT/PATCH/DELETE) require Admin role.
+            </summary>
+        </member>
+        <member name="M:DoctorLicenseManagement.API.Controllers.DoctorsController.GetAll(System.String,System.Nullable{DoctorLicenseManagement.Domain.Enums.DoctorStatus},System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Returns a paged list of doctors.
+            Uses the sp_GetDoctors stored procedure internally.
+            Expiry logic and search/filter are handled by the SQL stored procedure.
+            </summary>
+            <param name="search">Search by full name or license number (optional).</param>
+            <param name="status">Filter by status: 0=Active, 1=Expired, 2=Suspended (optional).</param>
+            <param name="pageNumber">Page number (default 1).</param>
+            <param name="pageSize">Items per page, max 100 (default 10).</param>
+        </member>
+        <member name="M:DoctorLicenseManagement.API.Controllers.DoctorsController.GetById(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Returns a single doctor by ID. Expiry logic is applied in C# (EffectiveStatus).
+            </summary>
+        </member>
+        <member name="M:DoctorLicenseManagement.API.Controllers.DoctorsController.Create(DoctorLicenseManagement.Application.DTOs.CreateDoctorDto,System.Threading.CancellationToken)">
+            <summary>
+            Creates a new doctor. License Number must be unique among non-deleted records.
+            Requires Admin role. Enforces plan doctor-count limits.
+            </summary>
+        </member>
+        <member name="M:DoctorLicenseManagement.API.Controllers.DoctorsController.Update(System.Guid,DoctorLicenseManagement.Application.DTOs.UpdateDoctorDto,System.Threading.CancellationToken)">
+            <summary>
+            Replaces all editable fields of an existing doctor. Requires Admin role.
+            License Number uniqueness is enforced (excluding this doctor).
+            </summary>
+        </member>
+        <member name="M:DoctorLicenseManagement.API.Controllers.DoctorsController.UpdateStatus(System.Guid,DoctorLicenseManagement.Application.DTOs.UpdateStatusDto,System.Threading.CancellationToken)">
+            <summary>
+            Updates only the status of a doctor (Active / Expired / Suspended).
+            </summary>
+        </member>
+        <member name="M:DoctorLicenseManagement.API.Controllers.DoctorsController.Delete(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Soft-deletes a doctor. The record is retained in the database with IsDeleted = true
+            and will not appear in any listing query.
+            </summary>
+        </member>
+        <member name="M:DoctorLicenseManagement.API.Controllers.DoctorsController.GetExpired(System.Threading.CancellationToken)">
+            <summary>
+            (Bonus) Returns all doctors with an expired license.
+            Uses sp_GetExpiredDoctors stored procedure.
+            </summary>
+        </member>
+        <member name="T:DoctorLicenseManagement.API.Controllers.PlansController">
+            <summary>
+            Public endpoint — returns available subscription plans for the pricing/signup page.
+            No authentication or tenant context required.
+            </summary>
+        </member>
+        <member name="M:DoctorLicenseManagement.API.Controllers.PlansController.GetAll(System.Threading.CancellationToken)">
+            <summary>Returns all active subscription plans ordered by display order.</summary>
+        </member>
+        <member name="M:DoctorLicenseManagement.API.Controllers.PlansController.GetById(System.Guid,System.Threading.CancellationToken)">
+            <summary>Returns a single plan by ID.</summary>
+        </member>
+        <member name="T:DoctorLicenseManagement.API.Middleware.GlobalExceptionMiddleware">
+            <summary>
+            Catches all unhandled exceptions and returns a consistent RFC 7807 ProblemDetails response.
+            This prevents stack traces leaking to clients in production while still logging full detail.
+            </summary>
+        </member>
+        <member name="T:DoctorLicenseManagement.API.Middleware.TenantResolutionMiddleware">
+             <summary>
+             Resolves the current tenant from the incoming HTTP request and populates ICurrentTenantService.
+            
+             Resolution order:
+               1. X-Tenant-Subdomain header  (easy for Postman / direct API testing)
+               2. Host subdomain              (production: acme.app.com → "acme")
+            
+             Endpoints that do NOT require a tenant context (auth/register, plans, swagger)
+             set [AllowWithoutTenant] or are excluded by path prefix matching below.
+             </summary>
+        </member>
+    </members>
+</doc>
