@@ -34,7 +34,7 @@ yarn-error.log*
 # Visual Studio / IDE
 **/.vs/
 **/.vscode/
-
+**/.vs/
 # SQL scripts (if you really don't want to push)
 # sql/          ← uncomment this line if you want to ignore the entire sql folder
 

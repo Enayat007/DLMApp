@@ -1,7 +1,10 @@
+import { Inter } from 'next/font/google'
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from '@/lib/context/AuthContext';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title:       { default: 'MedLicense', template: '%s | MedLicense' },
