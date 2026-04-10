@@ -3,6 +3,10 @@ import { type NextRequest, NextResponse } from 'next/server';
 /**
  * Next.js Edge Middleware — subdomain routing + auth guard.
  *
+ * admin.* subdomain:
+ *   - Rewrites all paths to /platform/* so the (platform) route group is served
+ *   - Guards protected pages with dlm_platform_token cookie
+ *
  * Root domain (no subdomain / www):
  *   - Serves the public marketing site (/, /pricing, /signup, /login)
  *   - Redirects any app paths (/dashboard, /doctors) back to /login
@@ -13,15 +17,36 @@ import { type NextRequest, NextResponse } from 'next/server';
  *   - Protected paths → require dlm_token cookie; redirect to /login if missing
  */
 
-const PUBLIC_PATHS_ON_SUBDOMAIN  = ['/login', '/signup', '/auth-handoff', '/api'];
+const PUBLIC_PATHS_ON_SUBDOMAIN    = ['/login', '/signup', '/auth-handoff', '/api'];
 const MARKETING_PATHS_ON_SUBDOMAIN = ['/', '/home', '/pricing'];
-const AUTH_COOKIE = 'dlm_token';
+const AUTH_COOKIE                  = 'dlm_token';
+const PLATFORM_COOKIE              = 'dlm_platform_token';
 
 export function middleware(request: NextRequest) {
   const { pathname, hostname } = new URL(request.url);
   const host = request.headers.get('host') ?? hostname;
 
   const subdomain = extractSubdomain(host);
+
+  // ── Platform admin subdomain (admin.*) ────────────────────────────────────────
+  if (subdomain === 'admin') {
+    // Rewrite: /anything → /platform/anything so (platform) route group is served
+    const rewrittenPath = pathname.startsWith('/platform')
+      ? pathname
+      : `/platform${pathname === '/' ? '/tenants' : pathname}`;
+
+    const platformToken = request.cookies.get(PLATFORM_COOKIE)?.value;
+    const isLoginPath   = rewrittenPath === '/platform/login';
+
+    if (!platformToken && !isLoginPath) {
+      return NextResponse.redirect(new URL('/platform/login', request.url));
+    }
+    if (platformToken && isLoginPath) {
+      return NextResponse.redirect(new URL('/platform/tenants', request.url));
+    }
+
+    return NextResponse.rewrite(new URL(rewrittenPath, request.url));
+  }
 
   // ── Root domain: marketing site ───────────────────────────────────────────────
   if (!subdomain) {
@@ -77,6 +102,9 @@ function extractSubdomain(host: string): string | null {
   if (parts.length < 2) return null;
 
   const candidate = parts[0];
+
+  // 'admin' is a reserved subdomain — return it so the admin branch handles it
+  if (candidate === 'admin') return 'admin';
 
   const nonTenantPrefixes = new Set(['www', 'api', 'mail', 'smtp', 'ftp']);
   if (nonTenantPrefixes.has(candidate)) return null;
